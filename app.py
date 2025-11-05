@@ -21,7 +21,21 @@
 
 from app import create_app
 
-app = create_app{}
+app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+# from flask import Flask
+# from app.routes.registration import registration_bp
+
+# app = Flask(__name__)
+# app.config.from_object('app.config.Config')
+
+# app.register_blueprint(registration_bp)
+
+# # ...altre configurazioni e blueprint...
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
+    
