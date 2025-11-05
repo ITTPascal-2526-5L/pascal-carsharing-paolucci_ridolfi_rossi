@@ -1,5 +1,16 @@
 <html>
     <body>
         <h1>REGISTRAZIONE PASSEGGERO</h1>
+        <form method="post">
+            <p>Nome utente:</p>
+            <input type="text" placeholder="Inserire il nome utente">
+            <br><br>
+            <p>Password:</p>
+            <input type="text" placeholder="Inserire la password">
+            <br><br>
+            <button type="submit">Accedi</button>
+        </form>
+        <a href="{{ url_for('index.index_html') }}">Indietro</a>
+
     </body>
 </html>

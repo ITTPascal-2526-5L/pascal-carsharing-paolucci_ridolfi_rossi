@@ -1,5 +1,27 @@
 <html>
     <body>
         <h1>REGISTRAZIONE AUTISTA</h1>
+        <form method="post">
+            <p>Nome:</p>
+            <input type="text" name="nome" placeholder="Inserire il nome" required>
+            <br><br>
+            <p>Cognome:</p>
+            <input type="text" name="cognome" placeholder="Inserire il cognome" required>
+            <br><br>
+            <p>Password:</p>
+            <input type="text" name="password" placeholder="Inserire la password" required>
+            <br><br>
+            <p>Età:</p>
+            <input type="text" name="eta" placeholder="Inserire l'età" required>
+            <br><br>
+            <p>Mail:</p>
+            <input type="text" name="mail" placeholder="Inserire la mail" required>
+            <br><br>
+            <p>Patente:</p>
+            <input type="text" name="license" placeholder="Inserire il codice della patente" width="100" required>
+            <br><br>
+            <button type="submit">Accedi</button>
+        </form>
+        <a href="{{ url_for('index.index_html') }}">Indietro</a>
     </body>
 </html>
