@@ -29,24 +29,16 @@ def registration_driver():
         with open('app/cartella_json/driver.json', 'w', encoding='utf-8') as f:
             json.dump(driver_data, f, indent=4, ensure_ascii=False)
 
-        # Mostra un messaggio di conferma
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_success'))  # Reindirizza alla pagina di successo
     # Se GET, mostra il form di registrazione
     return render_template("registration_driver.html")
 
-# Route per la pagina di successo della registrazione
 @registration_bp.route("/registration_success")
 def registration_success():
     return render_template("registration_success.html")
 
-# Route per la dashboard dell'autista (pagina di benvenuto dopo il login)
-# @registration_bp.route("/dashboard")
-# def dashboard():
-#     pass
-
-
-# Route per la registrazione dell'autista
+# Route per la registrazione del passeggero
 @registration_bp.route("/registration_passenger", methods=['GET', 'POST'])
 def registration_passenger():
     pass

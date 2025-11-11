@@ -3,7 +3,7 @@ from .config import Config
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config) #Config è una classe per indicare in quale ambiente stiamo lavorando
+    app.config.from_object(Config)
 
 
     #importo tutti i bp dentro routes
