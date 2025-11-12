@@ -30,15 +30,38 @@ def registration_driver():
             json.dump(driver_data, f, indent=4, ensure_ascii=False)
 
         flash('Registrazione avvenuta con successo!')
-        return redirect(url_for('registration.registration_success'))  # Reindirizza alla pagina di successo
+        return redirect(url_for('registration.registration_driver_success'))  # Reindirizza alla pagina di successo
     # Se GET, mostra il form di registrazione
     return render_template("registration_driver.html")
 
-@registration_bp.route("/registration_success")
-def registration_success():
-    return render_template("registration_success.html")
+@registration_bp.route("/registration_driver_success")
+def registration_driver_success():
+    return render_template("registration_driver_success.html")
 
 # Route per la registrazione del passeggero
 @registration_bp.route("/registration_passenger", methods=['GET', 'POST'])
 def registration_passenger():
     pass
+
+@registration_bp.route("/registration_school", methods=['GET', 'POST'])
+def registration_school():
+    if request.method == 'POST':
+        name = request.form['name']
+        address = request.form['address']
+        locality = request.form['locality']
+
+        school_data = {
+            "name":name,
+            "address":address,
+            "locality":locality
+        }
+
+        #Qui ci sarà il json e with open
+
+        flash('Registrazione avvenuta con successo!')
+        return redirect(url_for('registration.registration_school_success'))
+    return render_template("registration_school.html")
+
+@registration_bp.route("/registration_school_success")
+def registration_school_success():
+    return render_template("registration_school_success.html")
