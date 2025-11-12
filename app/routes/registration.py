@@ -26,7 +26,7 @@ def registration_driver():
         }
 
         # Salva i dati nel file JSON nella cartella corretta
-        with open('app/cartella_json/driver.json', 'w', encoding='utf-8') as f:
+        with open('app/cartella_json/driver.json', mode='a+', encoding='utf-8') as f:
             json.dump(driver_data, f, indent=4, ensure_ascii=False)
 
         flash('Registrazione avvenuta con successo!')
@@ -41,22 +41,48 @@ def registration_driver_success():
 # Route per la registrazione del passeggero
 @registration_bp.route("/registration_passenger", methods=['GET', 'POST'])
 def registration_passenger():
-    pass
+    if request.method == 'POST':
+        name=request.form['name']
+        surname = request.form['surname']
+        age = request.form['age']
+        password = request.form['password']
+        email = request.form['email']
+
+        passenger_data = {
+            "name": name,
+            "surname": surname,
+            "age": age,
+            "password": password,
+            "email": email
+        }
+
+        with open('app/cartella_json/passenger.json', mode='a+', encoding='utf-8') as f:
+            json.dump(passenger_data, f, indent=4, ensure_ascii=False)
+
+        flash('Registrazione avvenuta con successo!')
+        return redirect(url_for('registration.registration_passenger_success'))
+
+    return render_template("registration_passenger.html")
+
+@registration_bp.route("/registration_passenger_success")
+def registration_passenger_success():
+    return render_template("registration_passenger_success.html")
 
 @registration_bp.route("/registration_school", methods=['GET', 'POST'])
 def registration_school():
     if request.method == 'POST':
         name = request.form['name']
         address = request.form['address']
-        locality = request.form['locality']
+        suffix = request.form['suffix']
 
         school_data = {
             "name":name,
             "address":address,
-            "locality":locality
+            "suffix":suffix
         }
 
-        #Qui ci sarà il json e with open
+        with open('app/cartella_json/school.json', mode='a+', encoding='utf-8') as f:
+            json.dump(school_data, f, indent=4, ensure_ascii=False)
 
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_school_success'))

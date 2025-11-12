@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione Completata</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_success.css') }}">
+    
 </head>
 <body>
     <div class="success-container">
         <div class="success-icon">✓</div>
-        <h1>Registrazione Completata!</h1>
+        <h1>Registrazione del passenger completata!</h1>
         <p>Benvenuto nel nostro servizio di car sharing!</p>
         <div class="success-message">
             I tuoi dati sono stati salvati con successo nel sistema.
         </div>
+        <p>Ora puoi accedere con le tue credenziali per iniziare a utilizzare la piattaforma.</p>
         
         <div class="button-group">
             <a href="{{ url_for('main.homepage') }}" class="btn-primary">Torna alla Home</a>

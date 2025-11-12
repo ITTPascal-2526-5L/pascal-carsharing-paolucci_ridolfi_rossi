@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrazione Autista</title>
+    <title>Registrazione Passeggero</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_registration.css') }}">
+    
 </head>
 <body>
     <div class="form-container">
-        <h1>🚗 REGISTRAZIONE AUTISTA</h1>
-        <form action="{{ url_for('registration.registration_driver') }}" method="post">
+        <h1>👤 REGISTRAZIONE PASSEGGERO</h1>
+        <form method="post">
             <p>Nome:</p>
             <input type="text" name="name" placeholder="Inserire il nome" required>
 
@@ -24,9 +25,6 @@
 
             <p>Email:</p>
             <input type="email" name="email" placeholder="Inserire la mail" required>
-
-            <p>Patente:</p>
-            <input type="text" name="license" placeholder="Inserire il codice della patente" required>
 
             <button type="submit">Registrati</button>
         </form>
