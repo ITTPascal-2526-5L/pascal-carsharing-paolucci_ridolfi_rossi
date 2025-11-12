@@ -1,8 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash   # Importa gli strumenti necessari da Flask
 import json
+import random as Random
 
 # Crea un Blueprint per organizzare le route relative alla registrazione/autista
 registration_bp = Blueprint("registration", __name__)
+# id_driver =0
+# id_passenger=0
+# id_school=0
 
 # Route per la registrazione dell'autista
 @registration_bp.route("/registration_driver", methods=['GET', 'POST'])
@@ -17,6 +21,7 @@ def registration_driver():
         license = request.form['license']
 
         driver_data = {
+            "id": Random.randint(1, 1000000),
             "name": name,
             "surname": surname,
             "age": age,
@@ -61,6 +66,7 @@ def registration_driver():
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
 
+        # id_driver += 1
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_driver_success'))  # Reindirizza alla pagina di successo
     # Se GET, mostra il form di registrazione
@@ -81,6 +87,7 @@ def registration_passenger():
         email = request.form['email']
 
         passenger_data = {
+            "id": Random.randint(1, 1000000),
             "name": name,
             "surname": surname,
             "age": age,
@@ -116,6 +123,7 @@ def registration_passenger():
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
 
+        # id_passenger += 1
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_passenger_success'))
 
@@ -128,11 +136,13 @@ def registration_passenger_success():
 @registration_bp.route("/registration_school", methods=['GET', 'POST'])
 def registration_school():
     if request.method == 'POST':
+
         name = request.form['name']
         address = request.form['address']
         suffix = request.form['suffix']
 
         school_data = {
+            "id": Random.randint(1, 1000000),
             "name":name,
             "address":address,
             "suffix":suffix
@@ -165,6 +175,7 @@ def registration_school():
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
 
+        # id_school += 1
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_school_success'))
     return render_template("registration_school.html")
