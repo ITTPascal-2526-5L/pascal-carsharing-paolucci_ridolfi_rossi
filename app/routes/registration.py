@@ -26,8 +26,40 @@ def registration_driver():
         }
 
         # Salva i dati nel file JSON nella cartella corretta
-        with open('app/cartella_json/driver.json', mode='a+', encoding='utf-8') as f:
-            json.dump(driver_data, f, indent=4, ensure_ascii=False)
+        json_path = 'app/cartella_json/driver.json'
+
+        # Carica il contenuto esistente in modo robusto e appendi il nuovo oggetto
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    # Il file esiste ma non è un JSON valido: proviamo a sistemare casi come '}{' tra oggetti
+                    f.seek(0)
+                    raw = f.read().strip()
+                    if raw.startswith('{') and '}{' in raw:
+                        fixed = '[' + raw.replace('}{', '},{') + ']'
+                        try:
+                            data = json.loads(fixed)
+                        except Exception:
+                            data = []
+                    else:
+                        data = []
+        except FileNotFoundError:
+            data = []
+
+        # Assicuriamoci che i dati siano una lista
+        if not isinstance(data, list):
+            if isinstance(data, dict):
+                data = [data]
+            else:
+                data = []
+
+        data.append(driver_data)
+
+        # Scriviamo indietro l'array completo (sovrascrivendo il file)
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_driver_success'))  # Reindirizza alla pagina di successo
@@ -56,8 +88,33 @@ def registration_passenger():
             "email": email
         }
 
-        with open('app/cartella_json/passenger.json', mode='a+', encoding='utf-8') as f:
-            json.dump(passenger_data, f, indent=4, ensure_ascii=False)
+        json_path = 'app/cartella_json/passenger.json'
+
+        # Carica il contenuto esistente in modo robusto e appendi il nuovo oggetto
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    # Il file esiste ma non è un JSON valido: proviamo a sistemare casi come '}{' tra oggetti
+                    f.seek(0)
+                    raw = f.read().strip()
+                    if raw.startswith('{') and '}{' in raw:
+                        fixed = '[' + raw.replace('}{', '},{') + ']'
+                        try:
+                            data = json.loads(fixed)
+                        except Exception:
+                            data = []
+                    else:
+                        data = []
+        except FileNotFoundError:
+            data = []
+
+        data.append(passenger_data)
+
+        # Scriviamo indietro l'array completo (sovrascrivendo il file)
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_passenger_success'))
@@ -81,8 +138,32 @@ def registration_school():
             "suffix":suffix
         }
 
-        with open('app/cartella_json/school.json', mode='a+', encoding='utf-8') as f:
-            json.dump(school_data, f, indent=4, ensure_ascii=False)
+        json_path = 'app/cartella_json/school.json'
+
+        try:
+            with open(json_path, 'r', encoding='utf-8') as f:
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    # Il file esiste ma non è un JSON valido: proviamo a sistemare casi come '}{' tra oggetti
+                    f.seek(0)
+                    raw = f.read().strip()
+                    if raw.startswith('{') and '}{' in raw:
+                        fixed = '[' + raw.replace('}{', '},{') + ']'
+                        try:
+                            data = json.loads(fixed)
+                        except Exception:
+                            data = []
+                    else:
+                        data = []
+        except FileNotFoundError:
+            data = []
+
+        data.append(school_data)
+
+        # Scriviamo indietro l'array completo (sovrascrivendo il file)
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
 
         flash('Registrazione avvenuta con successo!')
         return redirect(url_for('registration.registration_school_success'))
