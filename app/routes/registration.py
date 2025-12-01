@@ -8,6 +8,10 @@ registration_bp = Blueprint("registration", __name__)
 # id_passenger=0
 # id_school=0
 
+@registration_bp.route("/index.html")
+def registration_index():
+    return render_template("index.html")
+
 # Route per la registrazione dell'autista
 @registration_bp.route("/registration_driver", methods=['GET', 'POST'])
 def registration_driver():
