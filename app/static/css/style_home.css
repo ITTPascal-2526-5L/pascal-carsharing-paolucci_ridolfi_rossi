@@ -297,3 +297,16 @@ nav a:hover {
         gap: 12px;
     }
 }
+
+/* Users button style */
+.btn-users{
+    background: #4caf50;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.btn-users:hover{
+    background:#3b8b3b;
+}

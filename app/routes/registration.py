@@ -1,6 +1,15 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash   # Importa gli strumenti necessari da Flask
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session   # Importa gli strumenti necessari da Flask
 import json
 import random as Random
+import os
+from werkzeug.utils import secure_filename
+
+# allowed extensions for images
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Crea un Blueprint per organizzare le route relative alla registrazione/autista
 registration_bp = Blueprint("registration", __name__)
@@ -19,20 +28,74 @@ def registration_driver():
         # Recupera i dati dal form inviato
         name = request.form['name']
         surname = request.form['surname']
-        age = request.form['age']
+        age_str = request.form['age']
         password = request.form['password']
         email = request.form['email'] # Ci manca da inserire l'Id e la data di creazione account
         license = request.form['license']
 
+        # Valida l'età
+        try:
+            age = int(age_str)
+            if age < 18 or age > 70:
+                flash('L\'età deve essere compresa tra 18 e 70 anni.')
+                return render_template('registration_driver.html')
+        except ValueError:
+            flash('L\'età deve essere un numero valido.')
+            return render_template('registration_driver.html')
+
+        # assegna un id unico
+        driver_id = Random.randint(1, 1000000)
+
+        # prepara struttura dati base
         driver_data = {
-            "id": Random.randint(1, 1000000),
+            "id": driver_id,
             "name": name,
             "surname": surname,
             "age": age,
             "password": password,
             "email": email,
-            "license": license
+            "license": license,
+            "license_front": None,
+            "license_back": None
         }
+
+        # Gestione upload file patente
+        upload_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'static', 'uploads', 'licenses'))
+        os.makedirs(upload_dir, exist_ok=True)
+
+        front_file = request.files.get('license_front')
+        back_file = request.files.get('license_back')
+
+        if front_file and front_file.filename:
+            if allowed_file(front_file.filename):
+                ext = secure_filename(front_file.filename).rsplit('.', 1)[1].lower()
+                saved_name = f"{email}_{license}_front.{ext}"
+                front_path = os.path.join(upload_dir, saved_name)
+                try:
+                    front_file.save(front_path)
+                    # salvo il percorso relativo al folder static per poterlo servire
+                    driver_data['license_front'] = os.path.join('static', 'uploads', 'licenses', saved_name).replace('\\','/')
+                except Exception as e:
+                    flash('Errore nel salvataggio della foto patente (fronte).')
+                    return render_template('registration_driver.html')
+            else:
+                flash('Formato file non supportato per la foto patente (fronte).')
+                return render_template('registration_driver.html')
+
+        if back_file and back_file.filename:
+            if allowed_file(back_file.filename):
+                ext = secure_filename(back_file.filename).rsplit('.', 1)[1].lower()
+                saved_name = f"{email}_{license}_back.{ext}"
+                back_path = os.path.join(upload_dir, saved_name)
+                try:
+                    back_file.save(back_path)
+                    driver_data['license_back'] = os.path.join('static', 'uploads', 'licenses', saved_name).replace('\\','/')
+                except Exception as e:
+                    flash('Errore nel salvataggio della foto patente (retro).')
+                    return render_template('registration_driver.html')
+            else:
+                flash('Formato file non supportato per la foto patente (retro).')
+                return render_template('registration_driver.html')
 
         # Salva i dati nel file JSON nella cartella corretta
         json_path = 'app/cartella_json/driver.json'
@@ -72,6 +135,8 @@ def registration_driver():
 
         # id_driver += 1
         flash('Registrazione avvenuta con successo!')
+        # Imposta lo stato di sessione per considerare l'utente loggato dopo la registrazione
+        session['user'] = {"id": driver_data['id'], "role": "driver", "name": name, "email": email}
         return redirect(url_for('registration.registration_driver_success'))  # Reindirizza alla pagina di successo
     # Se GET, mostra il form di registrazione
     return render_template("registration_driver.html")
@@ -86,9 +151,19 @@ def registration_passenger():
     if request.method == 'POST':
         name=request.form['name']
         surname = request.form['surname']
-        age = request.form['age']
+        age_str = request.form['age']
         password = request.form['password']
         email = request.form['email']
+
+        # Valida l'età
+        try:
+            age = int(age_str)
+            if age < 18 or age > 70:
+                flash('L\'età deve essere compresa tra 18 e 70 anni.')
+                return render_template('registration_passenger.html')
+        except ValueError:
+            flash('L\'età deve essere un numero valido.')
+            return render_template('registration_passenger.html')
 
         passenger_data = {
             "id": Random.randint(1, 1000000),
@@ -129,6 +204,7 @@ def registration_passenger():
 
         # id_passenger += 1
         flash('Registrazione avvenuta con successo!')
+        session['user'] = {"id": passenger_data['id'], "role": "passenger", "name": name, "email": email}
         return redirect(url_for('registration.registration_passenger_success'))
 
     return render_template("registration_passenger.html")
@@ -181,6 +257,7 @@ def registration_school():
 
         # id_school += 1
         flash('Registrazione avvenuta con successo!')
+        session['user'] = {"id": school_data['id'], "role": "school", "name": name}
         return redirect(url_for('registration.registration_school_success'))
     return render_template("registration_school.html")
 
