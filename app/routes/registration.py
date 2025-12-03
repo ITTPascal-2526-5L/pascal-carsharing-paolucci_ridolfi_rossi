@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session   # Importa gli strumenti necessari da Flask
+from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import random as Random
 import os
@@ -30,6 +31,7 @@ def registration_driver():
         surname = request.form['surname']
         age_str = request.form['age']
         password = request.form['password']
+        # hashed_password = generate_password_hash(password)
         email = request.form['email'] # Ci manca da inserire l'Id e la data di creazione account
         license = request.form['license']
 
@@ -52,7 +54,7 @@ def registration_driver():
             "name": name,
             "surname": surname,
             "age": age,
-            "password": password,
+            "password": password,  #hashed_password,
             "email": email,
             "license": license,
             "license_front": None,
@@ -153,6 +155,7 @@ def registration_passenger():
         surname = request.form['surname']
         age_str = request.form['age']
         password = request.form['password']
+        # hasehed_password = generate_password_hash(password)
         email = request.form['email']
 
         # Valida l'età
@@ -170,7 +173,7 @@ def registration_passenger():
             "name": name,
             "surname": surname,
             "age": age,
-            "password": password,
+            "password": password,  #hashed_password,
             "email": email
         }
 

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import os
 
@@ -12,6 +13,12 @@ def login_driver():
 		email = request.form.get('email')
 		password = request.form.get('password')
 		# Placeholder authentication: accept non-empty credentials
+		# with open("driver.json", "r") as f:
+		# 	dati = json.load(f)
+		
+		# hash_saved = dati["password"]
+
+		# if ((not email) and (check_password_hash(hash_saved, password))):
 		if not (email and password):
 			flash('Inserisci email e password.')
 			return render_template('login_driver.html')
