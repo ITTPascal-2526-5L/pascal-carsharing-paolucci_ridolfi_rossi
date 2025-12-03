@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_index.css') }}">
+    <style>
+        .tables { margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .controls { display:flex; gap:10px; justify-content:center; margin-top:20px }
+    </style>
+    <script>
+        function showTable(name) {
+            document.querySelectorAll('.data-table').forEach(t=>t.style.display='none');
+            document.getElementById(name).style.display='table';
+        }
+        window.addEventListener('DOMContentLoaded', ()=>{
+            // show drivers by default
+            showTable('drivers-table');
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>👥 Users</h1>
+        <p class="subtitle">Visualizza i dati presenti nei file JSON</p>
+
+        <div class="controls">
+            <button class="btn-driver" onclick="showTable('drivers-table')">Drivers</button>
+            <button class="btn-passenger" onclick="showTable('passengers-table')">Passengers</button>
+            <button class="btn-school" onclick="showTable('schools-table')">Schools</button>
+        </div>
+
+        <div class="tables">
+            <table id="drivers-table" class="data-table">
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>Cognome</th><th>Email</th><th>Patente</th></tr>
+                </thead>
+                <tbody>
+                {% for d in drivers %}
+                    <tr>
+                        <td>{{ d.get('id','') }}</td>
+                        <td>{{ d.get('name','') }}</td>
+                        <td>{{ d.get('surname','') }}</td>
+                        <td>{{ d.get('email','') }}</td>
+                        <td>{{ d.get('license','') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <table id="passengers-table" class="data-table" style="display:none">
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>Cognome</th><th>Email</th></tr>
+                </thead>
+                <tbody>
+                {% for p in passengers %}
+                    <tr>
+                        <td>{{ p.get('id','') }}</td>
+                        <td>{{ p.get('name','') }}</td>
+                        <td>{{ p.get('surname','') }}</td>
+                        <td>{{ p.get('email','') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <table id="schools-table" class="data-table" style="display:none">
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>Address</th><th>Suffix</th></tr>
+                </thead>
+                <tbody>
+                {% for s in schools %}
+                    <tr>
+                        <td>{{ s.get('id','') }}</td>
+                        <td>{{ s.get('name','') }}</td>
+                        <td>{{ s.get('address','') }}</td>
+                        <td>{{ s.get('suffix','') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="button-group">
+            <a href="{{ url_for('main.homepage') }}">← Torna alla Home</a>
+        </div>
+    </div>
+</body>
+</html>
