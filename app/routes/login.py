@@ -128,5 +128,5 @@ def login_index():
 @login_bp.route('/logout')
 def logout():
 	session.pop('user', None)
-	flash('Sei stato disconnesso.')
+	# flash('Sei stato disconnesso.')
 	return redirect(url_for('main.homepage'))
