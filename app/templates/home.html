@@ -14,8 +14,8 @@
 				<a href="#">Viaggia</a>
 				<a href="#">Info</a>
 				<div class="nav-actions">
-					{% if session.get('user') %}
-						<span class="welcome">Benvenuto, {{ session.get('user').get('name', session.get('user').get('email')) }}</span>
+					{% if user_name %}
+						<span class="welcome">Benvenuto, {{ user_name }}</span>
 						<a href="{{ url_for('login.logout') }}" class="btn-logout">Logout</a>
 					{% else %}
 						<a href="{{ url_for('login.login_index') }}" class="login-link">Accedi</a>

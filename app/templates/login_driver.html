@@ -10,7 +10,7 @@
     <div class="form-container">
         <h1>🚗 LOGIN AUTISTA</h1>
 
-        {% with messages = get_flashed_messages() %}
+        <!-- {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="flash-messages">
                 {% for msg in messages %}
@@ -18,7 +18,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        {% endwith %}
+        {% endwith %} -->
 
         <form action="{{ url_for('login.login_driver') }}" method="post">
             <p>Email:</p>
