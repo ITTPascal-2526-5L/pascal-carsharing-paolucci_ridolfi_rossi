@@ -75,3 +75,15 @@
         a:hover {
             background-color: #e0e0e0;
         }
+        .flash-messages {
+            background: #fff4e5;
+            border: 1px solid #ffd8a8;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .flash-messages p {
+            margin: 0;
+            color: #7a4a00;
+            font-weight: bold;
+        }
