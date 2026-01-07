@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pascal Car Sharing - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_index.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Pascal Car Sharing</h1>
+        <p class="subtitle">Benvenuto! Scegli il tuo ruolo per continuare</p>
+        
+        <div class="button-group">
+            <a href="{{ url_for('registration.registration_driver') }}" class="btn-driver">Registrati come Autista</a>
+            <a href="{{ url_for('registration.registration_school') }}" class="btn-school">Registrati come scuola</a>
+            <a href="{{ url_for('registration.registration_passenger') }}" class="btn-passenger">Registrati come Passeggero</a>
+        </div>
+    </div>
+</body>
+</html>

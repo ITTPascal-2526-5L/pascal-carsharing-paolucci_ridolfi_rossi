@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrazione Scuola</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_registration.css') }}">
+    
+</head>
+<body>
+    <div class="form-container">
+        <h1>🚗 REGISTRAZIONE SCUOLA</h1>
+        <form action="{{ url_for('registration.registration_school') }}" method="post">
+            <p>Nome:</p>
+            <input type="text" name="name" placeholder="Inserire il nome della scuola" required>
+
+            <p>Indirizzo:</p>
+            <input type="text" name="address" placeholder="Inserire l'indirizzo" required>
+
+            <p>Suffisso del dominio:</p>
+            <input type="text" name="suffix" placeholder="Inserire il suffisso di dominio della mail scolastica" required>
+
+            <button type="submit">Registrati</button>
+        </form>
+        <div class="button-group">
+            <a href="{{ url_for('main.homepage') }}">← Torna alla Home</a>
+        </div>
+    </div>
+</body>
+</html>

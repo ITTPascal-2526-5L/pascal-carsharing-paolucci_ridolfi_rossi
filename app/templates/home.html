@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="it">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Raggiungi qualsiasi destinazione con noi</title>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
+	</head>
+	<body>
+		<header>
+			<div class="brand">Pascal car-sharing</div>
+			<nav>
+				<a href="#">Viaggia</a>
+				<a href="#">Info</a>
+				<div class="nav-actions">
+					{% if user_name %}
+						<span class="welcome">Benvenuto, {{ user_name }}</span>
+						<a href="{{ url_for('login.logout') }}" class="btn-logout">Logout</a>
+					{% else %}
+						<a href="{{ url_for('login.login_index') }}" class="login-link">Accedi</a>
+						<a href="{{ url_for('registration.registration_index') }}" class="btn-register">Registrati</a>
+					{% endif %}
+					<a href="{{ url_for('users.users_index') }}" class="btn-users">Users</a>
+				</div>
+			</nav>
+		</header>
+
+		<main class="container">
+			<section class="left">
+				<div class="hero">
+					<h1>Raggiungi<br>qualsiasi<br>destinazione con<br>noi</h1>
+				</div>
+
+				<div class="cta-row">
+					<button class="btn-pill">⏱️ Parti ora</button>
+				</div>
+
+				<form class="search-box" onsubmit="return false;">
+					<div class="input"><span style="width:18px;display:inline-block">📍</span><input placeholder="Luogo di partenza"></div>
+					<div class="input"><span style="width:18px;display:inline-block">■</span><input placeholder="Indirizzo di arrivo"></div>
+					<div style="margin-top:12px">
+						<button class="btn-primary">Vedi le tariffe</button>
+					</div>
+				</form>
+			</section>
+
+		<aside class="right">
+			<img class="illustration" src="{{ url_for('static', filename='img/logo_migliore.png') }}" alt="Logo Pascal Car Sharing">
+		</aside>
+		</main>
+
+	</body>
+</html>
+
