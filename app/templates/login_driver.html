@@ -1,26 +1,37 @@
-{% extends "base.html" %}
-{% block title %}Login Driver{% endblock %}
-{% block content %}
-<div class="container mt-5">
-    <h2>Login Driver</h2>
-    {% if error %}
-        <div class="alert alert-danger">{{ error }}</div>
-    {% endif %}
-    <form method="POST" action="{{ url_for('login_driver') }}">
-        <div class="mb-3">
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" class="form-control" name="username" required>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Autista</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_registration.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>🚗 LOGIN AUTISTA</h1>
+
+        <!-- {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for msg in messages %}
+                    <p>{{ msg }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %} -->
+
+        <form action="{{ url_for('login.login_driver') }}" method="post">
+            <p>Email:</p>
+            <input type="email" name="email" placeholder="Inserire la mail" required>
+
+            <p>Password:</p>
+            <input type="password" name="password" placeholder="Inserire la password" required>
+
+            <button type="submit">Accedi</button>
+        </form>
+        <div class="button-group">
+            <a href="{{ url_for('main.homepage') }}">← Torna alla Home</a>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password:</label>
-            <input type="password" class="form-control" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <div class="mt-3">
-        <a href="{{ url_for('set_cookie') }}">Set cookie</a> |
-        <a href="{{ url_for('get_cookie') }}">Get cookie</a> |
-        <a href="{{ url_for('remove_cookie') }}">Remove cookie</a>
     </div>
-</div>
-{% endblock %}
+</body>
+</html>
