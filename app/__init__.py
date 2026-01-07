@@ -19,6 +19,9 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
+    with app.app_context():
+        db.create_all()
+
     #importo tutti i bp dentro routes
     #ogni bp è una relazione con le funzionalità del software
     from .routes import blueprints
