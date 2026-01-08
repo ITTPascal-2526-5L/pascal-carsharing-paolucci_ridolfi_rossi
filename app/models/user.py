@@ -7,3 +7,6 @@ class User:
     password = db.Column(db.String(100), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     created_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<User {self.id} - Name: {self.name} {self.surname} - Mail: {self.mail} - Age: {self.age}>'
