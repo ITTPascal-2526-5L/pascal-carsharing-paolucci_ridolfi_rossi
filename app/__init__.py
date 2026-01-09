@@ -9,18 +9,9 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-    
-    # Configura la sessione per logout al chiusura del browser
-    app.config['SESSION_PERMANENT'] = False
-    app.config['SESSION_TYPE'] = 'filesystem'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
     db.init_app(app)
     migrate.init_app(app, db)
-
-    with app.app_context():
-        db.create_all()
 
     #importo tutti i bp dentro routes
     #ogni bp è una relazione con le funzionalità del software
